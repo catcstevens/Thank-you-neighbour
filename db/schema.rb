@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_25_011458) do
+ActiveRecord::Schema.define(version: 2020_02_25_012231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,16 @@ ActiveRecord::Schema.define(version: 2020_02_25_011458) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "neighbours", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "password"
+    t.bigint "listing_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["listing_id"], name: "index_neighbours_on_listing_id"
+  end
+
   create_table "photos", force: :cascade do |t|
     t.string "url"
     t.string "caption"
@@ -64,6 +74,7 @@ ActiveRecord::Schema.define(version: 2020_02_25_011458) do
   end
 
   add_foreign_key "answers", "questions"
+  add_foreign_key "neighbours", "listings"
   add_foreign_key "photos", "listings"
   add_foreign_key "questions", "borrowers"
   add_foreign_key "questions", "listings"
