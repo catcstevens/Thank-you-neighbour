@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_25_012231) do
+ActiveRecord::Schema.define(version: 2020_02_25_013352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,9 +73,27 @@ ActiveRecord::Schema.define(version: 2020_02_25_012231) do
     t.index ["listing_id"], name: "index_questions_on_listing_id"
   end
 
+  create_table "ratings", force: :cascade do |t|
+    t.bigint "neighbour_id"
+    t.integer "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["neighbour_id"], name: "index_ratings_on_neighbour_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.bigint "neighbour_id"
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["neighbour_id"], name: "index_reviews_on_neighbour_id"
+  end
+
   add_foreign_key "answers", "questions"
   add_foreign_key "neighbours", "listings"
   add_foreign_key "photos", "listings"
   add_foreign_key "questions", "borrowers"
   add_foreign_key "questions", "listings"
+  add_foreign_key "ratings", "neighbours"
+  add_foreign_key "reviews", "neighbours"
 end
