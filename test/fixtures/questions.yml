@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  listing: one
+  borrower: one
+  body: MyText
+
+two:
+  listing: two
+  borrower: two
+  body: MyText

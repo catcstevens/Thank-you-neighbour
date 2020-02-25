@@ -10,10 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_25_001746) do
+ActiveRecord::Schema.define(version: 2020_02_25_011458) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "answers", force: :cascade do |t|
+    t.bigint "question_id"
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_answers_on_question_id"
+  end
+
+  create_table "borrowers", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "password"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "listings", force: :cascade do |t|
     t.string "title"
@@ -28,4 +44,27 @@ ActiveRecord::Schema.define(version: 2020_02_25_001746) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "photos", force: :cascade do |t|
+    t.string "url"
+    t.string "caption"
+    t.bigint "listing_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["listing_id"], name: "index_photos_on_listing_id"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.bigint "listing_id"
+    t.bigint "borrower_id"
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["borrower_id"], name: "index_questions_on_borrower_id"
+    t.index ["listing_id"], name: "index_questions_on_listing_id"
+  end
+
+  add_foreign_key "answers", "questions"
+  add_foreign_key "photos", "listings"
+  add_foreign_key "questions", "borrowers"
+  add_foreign_key "questions", "listings"
 end
