@@ -1,3 +1,3 @@
 class Photo < ApplicationRecord
-  belongs_to :listing
+  # belongs_to :listing
 end
